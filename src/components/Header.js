@@ -9,7 +9,6 @@ export default function Header() {
   const {googleSignIn, logOut, user} = UserAuth();
   const navigate = useNavigate();
 
-  
   const handleGoogleSignin = async () => {
     try {
       await googleSignIn();
@@ -41,7 +40,7 @@ export default function Header() {
         ) : (
           <Button
             variant="contained"
-            color="error"
+            className="loginBtn"
             onClick={handleGoogleSignin}
           >
             log in

@@ -102,7 +102,7 @@ const AddEditStudent = ({activeTab, setActiveTab}) => {
     } else if (isNaN(pincode)) {
       setErrorStore(true);
     }
-  });
+  }, [rollNumber, pincode]);
 
   const addStudent = async (e) => {
     e.preventDefault();
@@ -140,40 +140,55 @@ const AddEditStudent = ({activeTab, setActiveTab}) => {
   };
 
   useEffect(() => {
+    let isMounted = true;
     const getStudent = async () => {
-      const docRef = doc(db, "students", id);
-      const docSnap = await getDoc(docRef);
-      const student = docSnap.data();
-
-      if (docSnap.exists()) {
-        setState({
-          firstName: student.firstName,
-          middleName: student.middleName,
-          lastName: student.lastName,
-          cls: student.cls,
-          division: student.division,
-          rollNumber: student.rollNumber,
-          addressLine1: student.addressLine1,
-          addressLine2: student.addressLine2,
-          landmark: student.landmark,
-          city: student.city,
-          pincode: student.pincode,
-        });
-      } else {
-        toast.error("no such student");
+      try {
+        if (isMounted) {
+          const docRef = doc(db, "students", id);
+          const docSnap = await getDoc(docRef);
+          const student = docSnap.data();
+          return student;
+        }
+      } catch (err) {
+        console.log(err);
       }
     };
+
     if (id) {
-      getStudent();
+      getStudent()
+        .then((student) => {
+          if (student) {
+            setState({
+              firstName: student.firstName,
+              middleName: student.middleName,
+              lastName: student.lastName,
+              cls: student.cls,
+              division: student.division,
+              rollNumber: student.rollNumber,
+              addressLine1: student.addressLine1,
+              addressLine2: student.addressLine2,
+              landmark: student.landmark,
+              city: student.city,
+              pincode: student.pincode,
+            });
+          } else {
+            toast.error("no such student");
+          }
+        })
+        .catch((err) => console.log(err));
     } else {
       setState(initialState);
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [id]);
 
   return (
     <div>
       <ToastContainer />
-      <div class="keeper">
+      <div className="keeper">
         {id ? (
           <h4 className="title">edit student </h4>
         ) : (
@@ -347,7 +362,7 @@ const AddEditStudent = ({activeTab, setActiveTab}) => {
           variant="contained"
           type="submit"
           disabled={errorStore}
-          className='inputBtn'
+          className="inputBtn"
         >
           {id ? "edit" : "add "}
         </Button>

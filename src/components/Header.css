@@ -15,7 +15,10 @@
     font-size:1.6rem;
     font-weight:800;
 }
-
+.loginBtn{
+    background-color: white !important;
+    color:black !important;
+}
 
 .profile{
     background-color:#fafaff !important;

@@ -11,6 +11,7 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
+  CircularProgress,
 } from "@mui/material";
 import {
   query,
@@ -28,6 +29,7 @@ import "./ManageStudent.css";
 const ManageStudent = ({activeTab, setActiveTab}) => {
   const [students, setStudents] = useState([]);
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {user} = UserAuth();
 
@@ -40,35 +42,44 @@ const ManageStudent = ({activeTab, setActiveTab}) => {
   };
 
   useEffect(() => {
+    let isMounted = true;
+    setIsLoading(true);
     const getStudents = async () => {
-      console.log('get students in the db');
       try {
-        const studentsRef = collection(db, "students");
-        const q = query(studentsRef, orderBy("createdAt", "desc"));
-        const querySnapshot = await getDocs(q);
+        if (isMounted) {
+          console.log("get students in the db");
 
-        let students = [];
+          const studentsRef = collection(db, "students");
+          const q = query(studentsRef, orderBy("createdAt", "desc"));
+          const querySnapshot = await getDocs(q);
 
-        querySnapshot.forEach((doc) => {
-          let student = doc.data();
+          let students = [];
 
-          students.push(student);
-        });
-        console.log(students);
+          querySnapshot.forEach((doc) => {
+            let student = doc.data();
 
-        setStudents((prevStudents) => students);
+            students.push(student);
+          });
+          return students;
+        }
       } catch (err) {
         console.log(err);
       }
     };
+    getStudents()
+      .then((response) => {
+        setStudents(response);
+        setIsLoading(false);
+      })
+      .catch((err) => console.log(err));
 
     return () => {
-      getStudents();
+      isMounted = false;
     };
   }, []);
 
   const deleteStudent = async (id) => {
-    console.log('delte studdent ' +id);
+    console.log("delte studdent " + id);
     try {
       if (!user) {
         toast.error("you must login first!!", {
@@ -171,6 +182,7 @@ const ManageStudent = ({activeTab, setActiveTab}) => {
             })}
         </tbody>
       </table>
+      {isLoading && <CircularProgress />}
     </div>
   );
 };
