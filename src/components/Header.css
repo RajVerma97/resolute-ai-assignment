@@ -1,0 +1,46 @@
+.header{
+    background-color: #004e98;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    height:12vh;
+    padding:0.3em 2em;
+   
+   
+}
+
+.logo{
+    color:white;
+    text-decoration: none;
+    font-size:1.6rem;
+    font-weight:800;
+}
+
+
+.profile{
+    background-color:#fafaff !important;
+    height:7vh;
+   
+}
+.profile__email{
+    color:#30343f;
+    font-size:1em;
+    font-weight: 500;
+    text-transform: none;
+
+}
+.profile__image{
+margin-right:0.5em;
+}
+.header__right Link{
+color:white;
+}
+
+@media screen and (min-width:768px) {
+.profile {
+       
+        height: 9vh;
+
+    }
+
+}

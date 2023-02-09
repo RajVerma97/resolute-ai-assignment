@@ -1,0 +1,23 @@
+
+
+.btn{
+   
+    margin:0.5em   !important;
+ 
+
+
+}
+
+@media screen and (min-width:768px) {
+    .btn {
+            width: 50vh;
+            margin: 0.5em !important;
+    
+    
+    
+        }
+
+}
+
+
+

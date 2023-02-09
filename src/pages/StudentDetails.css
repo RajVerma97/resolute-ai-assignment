@@ -1,0 +1,32 @@
+.studentDetails{
+    margin-top:2em;
+    background-color: #3a6ea5;
+    padding: 0.5em 1em;
+    color:white;
+    text-align: left;
+    margin-bottom:10vh !important;
+  
+  
+}
+
+.studentDetails__title{
+    color:black;
+    font-size: 1.6em;
+    font-weight: 900;
+    text-transform: capitalize;
+
+}
+.info{
+    margin-bottom: 0.4em;
+    font-size: 1.3em;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+@media screen and (min-width:768px) {
+    .studentDetails{
+        width: 40%;
+        margin: 0 auto;
+    }
+}
+
