@@ -14,6 +14,10 @@
     text-decoration: none;
     font-size:1.6rem;
     font-weight:800;
+    
+}
+.logo:hover{
+    cursor:pointer;
 }
 .loginBtn{
     background-color: white !important;

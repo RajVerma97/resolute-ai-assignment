@@ -9,25 +9,52 @@ const StudentDetails = ({activeTab, setActiveTab}) => {
   const [student, setStudent] = useState({});
   const {id} = useParams();
 
-  setActiveTab("none");
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      setActiveTab("none");
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [setActiveTab]);
 
   useEffect(() => {
-    const getStudent = async () => {
-      const docRef = doc(db, "students", id);
-      const docSnap = await getDoc(docRef);
+    let isMounted = true;
 
-      if (docSnap.exists()) {
-        setStudent(docSnap.data());
-      } else {
-        toast.error("no such student");
+    const getStudent = async () => {
+      try {
+        if (isMounted) {
+          const docRef = doc(db, "students", id);
+          const docSnap = await getDoc(docRef);
+          const student = docSnap.data();
+
+          return student;
+        }
+      } catch (err) {
+        console.log(err);
       }
     };
+    getStudent()
+      .then((student) => {
+        if (student) {
+          console.log(student);
+          setStudent(student);
+        } else {
+          toast.error("no such student", {
+            position: "top-center",
+            autoClose: 4000,
+            pauseOnHover: false,
+          });
+        }
+      })
+      .catch((err) => console.log(err));
     return () => {
-      getStudent();
+      isMounted = false;
     };
   }, [id]);
   return (
-    <div class="studentDetails">
+    <div className="studentDetails">
       <ToastContainer />
       <h4 className="studentDetails__title">student details</h4>
       <div className="info">

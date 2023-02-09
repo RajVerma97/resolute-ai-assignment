@@ -24,6 +24,7 @@ export default function Controller({activeTab, setActiveTab}) {
     <div className="controller">
       <Button
         className="btn"
+        size="large"
         onClick={() => {
           setActiveTab("add");
           navigate("/add");
@@ -35,6 +36,7 @@ export default function Controller({activeTab, setActiveTab}) {
       </Button>
       <Button
         className="btn"
+        size="large"
         onClick={() => {
           setActiveTab("manage");
           navigate("/");
@@ -44,18 +46,22 @@ export default function Controller({activeTab, setActiveTab}) {
       >
         manage student
       </Button>
-      {user? <Button
-        className="btn"
-        onClick={() => {
-          setActiveTab("logout");
-          handleSignOut();
-        }}
-        variant={activeTab === "logout" ? "contained" : "outlined"}
-        startIcon={<Logout />}
-      >
-        logout
-      </Button>:<></> }
-     
+      {user ? (
+        <Button
+          className="btn"
+          size="large"
+          onClick={() => {
+            setActiveTab("logout");
+            handleSignOut();
+          }}
+          variant={activeTab === "logout" ? "contained" : "outlined"}
+          startIcon={<Logout />}
+        >
+          logout
+        </Button>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

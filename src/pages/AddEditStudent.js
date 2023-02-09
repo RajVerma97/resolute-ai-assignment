@@ -71,7 +71,9 @@ const AddEditStudent = ({activeTab, setActiveTab}) => {
     e.preventDefault();
     if (!user) {
       toast.error("you must login first!!", {
-        position: "center",
+        position: "top-center",
+        autoClose: 4000,
+        pauseOnHover: false,
       });
     } else {
       const docRef = doc(db, "students", id);
@@ -88,7 +90,11 @@ const AddEditStudent = ({activeTab, setActiveTab}) => {
         city,
         pincode,
       });
-      toast.success("student updated successfully");
+      toast.success("student updated successfully", {
+        position: "top-center",
+        autoClose: 4000,
+        pauseOnHover: false,
+      });
       setState(initialState);
       setTimeout(() => navigate("/"), 2000);
       setActiveTab("manage");
@@ -109,7 +115,9 @@ const AddEditStudent = ({activeTab, setActiveTab}) => {
 
     if (!user) {
       toast.error("you must login first!!", {
-        position: "center",
+        position: "top-center",
+        autoClose: 4000,
+        pauseOnHover: false,
       });
     } else {
       try {
@@ -128,13 +136,21 @@ const AddEditStudent = ({activeTab, setActiveTab}) => {
           pincode,
         });
         const result = await updateDoc(docRef, {id: docRef.id});
-        toast.success("student added successfully");
+        toast.success("student added successfully", {
+          position: "top-center",
+          autoClose: 4000,
+          pauseOnHover: false,
+        });
         setState(initialState);
         setTimeout(() => navigate("/"), 2000);
         setActiveTab("manage");
         setErrorStore(false);
       } catch (e) {
-        toast.error(" error adding student: " + e);
+        toast.error(" error adding student: " + e, {
+          position: "top-center",
+          autoClose: 4000,
+          pauseOnHover: false,
+        });
       }
     }
   };
@@ -172,7 +188,11 @@ const AddEditStudent = ({activeTab, setActiveTab}) => {
               pincode: student.pincode,
             });
           } else {
-            toast.error("no such student");
+            toast.error("no such student", {
+              position: "top-center",
+              autoClose: 4000,
+              pauseOnHover: false,
+            });
           }
         })
         .catch((err) => console.log(err));

@@ -83,7 +83,10 @@ const ManageStudent = ({activeTab, setActiveTab}) => {
     try {
       if (!user) {
         toast.error("you must login first!!", {
-          position: "center",
+          position: "top-center",
+          autoClose: 4000,
+          pauseOnHover:false
+          
         });
       } else {
         const docRef = doc(db, "students", id);
@@ -94,7 +97,12 @@ const ManageStudent = ({activeTab, setActiveTab}) => {
         setStudents((prevStudents) => filteredArray);
       }
     } catch (err) {
-      toast.error("error " + err);
+      toast.error("error " + err, {
+          position: "top-center",
+          autoClose: 4000,
+          pauseOnHover:false
+          
+        });
     }
   };
 
